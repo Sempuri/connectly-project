@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenRefreshView
+from posts.views import CustomTokenObtainPairView
 
 
 
@@ -25,7 +27,10 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('api-auth/', include('rest_framework.urls')),  # DRF login/logout
     path('posts/', include('posts.urls')),
-    path('api/', include('api.urls')),  
+
+    # Add these lines for JWT token authentication
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  
     # Add a root URL pattern
     path('', lambda request: redirect('accounts/login/')),  # Redirect to login page
 ]

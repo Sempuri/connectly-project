@@ -6,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
    
    class Meta:
        model = User
-       fields = ['id', 'username', 'email', 'created_at']
+       fields = ['id', 'username', 'email', 'created_at', 'role']
 
 
        def validate_username(self, value):
@@ -21,7 +21,7 @@ class PostSerializer(serializers.ModelSerializer):
 
    class Meta:
        model = Post
-       fields = ['id', 'content', 'author', 'created_at', 'comments', 'likes', 'dislikes']
+       fields = ['id', 'content', 'author', 'created_at', 'privacy', 'comments', 'likes', 'dislikes']
 
    def validate_author(self, value):
        if not User.objects.filter(id=value.id).exists():
